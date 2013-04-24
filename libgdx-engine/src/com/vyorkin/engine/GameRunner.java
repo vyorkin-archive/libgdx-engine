@@ -22,7 +22,6 @@ import com.vyorkin.engine.services.MusicManager;
 import com.vyorkin.engine.services.PreferencesManager;
 import com.vyorkin.engine.services.SoundManager;
 
-
 public abstract class GameRunner extends Game {
 	private LoadingRenderer loading;
 	

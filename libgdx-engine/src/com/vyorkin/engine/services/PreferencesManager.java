@@ -16,7 +16,7 @@ public class PreferencesManager {
 	}
 	
 	public boolean isDeveloperMode() {
-		return get().getBoolean(DEVELOPER_MODE, true);
+		return get().getBoolean(DEVELOPER_MODE, false);
 	}
 	
 	public boolean isMusicMuted() {

@@ -2,22 +2,18 @@ package com.vyorkin.engine;
 
 
 public class GameSettings {
-	public static final String VERSION = "0.0.0.01 Pre-Alpha";
-	public static final String LOG = "game";
-	public static final int WIDTH = 480;
-	public static final int HEIGHT = 320;
-	
 	public int width;
 	public int height;
 	public boolean useGL20;
 	public String preferences;
 	public String version;
 	public String log;
+	public String title;
 	
-	public GameSettings() {
-		this(VERSION, LOG, WIDTH, HEIGHT);
+	public GameSettings(String title, String version, int width, int height) {
+		this(title, version, title, width, height);
 	}
-	public GameSettings(String version, 
+	public GameSettings(String title, String version, 
 		String log, int width, int height) {
 		this.version = version;
 		this.log = log;

@@ -1,12 +1,9 @@
 package com.vyorkin.engine.renderers;
 
-import com.badlogic.gdx.Gdx;
 import com.vyorkin.engine.E;
 import com.vyorkin.engine.base.Renderable;
 
-
 public abstract class LoadingRenderer implements Renderable {
-	private static final String LOG = "LoadingRenderer";
 	private final Runnable doneCallback;
 	
 	protected LoadingRenderer() {
@@ -31,7 +28,7 @@ public abstract class LoadingRenderer implements Renderable {
 			}
 		} else {
 			draw(delta);
-			Gdx.app.debug(LOG, "Loading: " + getPercents());
+			E.log("Loading: " + getPercents());
 		}
 	}
 	

@@ -9,9 +9,12 @@ public class MusicManager implements Disposable {
     private float volume;
     private boolean muted;
 
-    public MusicManager(boolean muted, float volume) {
-    	this.muted = false;
-    	this.volume = 1;
+    public MusicManager() {
+    	this.muted = E.preferences.isMusicMuted();
+    	this.volume = E.preferences.getMusicVolume();
+    	
+    	E.log("Music muted: " + this.muted);
+    	E.log("Music volume: " + this.volume);
     }
 
     public void play(String fileName) {
@@ -33,8 +36,11 @@ public class MusicManager implements Disposable {
     
     public void stop() {
     	if (current != null) {
-    		E.log("Stopping current music");
-    		E.assets.get(current, Music.class).stop();
+    		if (E.assets.isLoaded(current, Music.class)) {
+    			E.log("Stopping current music");
+    			Music music = E.assets.get(current, Music.class);
+    			music.stop();
+    		}
     	}
     }
     

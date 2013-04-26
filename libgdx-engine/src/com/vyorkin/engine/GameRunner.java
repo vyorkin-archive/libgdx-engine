@@ -23,27 +23,24 @@ import com.vyorkin.engine.services.PreferencesManager;
 import com.vyorkin.engine.services.SoundManager;
 
 public abstract class GameRunner extends Game {
-	private LoadingRenderer loading;
-	
-	protected AssetManager assets;
-	protected PreferencesManager prefs;
-	
 	private FPSLogger fpsLogger;
+	private LoadingRenderer loading;
 	private DiagnosticsRenderer diagnostics;
-	
 	private GameScreen nextScreen;
 	
 	@Override
 	public void create() {
 		this.nextScreen = null;
 		
-		this.assets = new AssetManager();
-		this.prefs = new PreferencesManager();
+		E.settings = getSettings();
 		
-		E.assets = assets;
+		E.preferences = new PreferencesManager();
+		E.assets = new AssetManager();
 		E.font = new BitmapFont();
 		E.batch = new SpriteBatch();
-		E.preferences = prefs;
+		E.locales = new LocaleManager();
+		E.music = new MusicManager();
+		E.sounds = new SoundManager();
 		
 		this.loading = new TextLoadingRenderer(
 			new Runnable() {
@@ -54,26 +51,22 @@ public abstract class GameRunner extends Game {
 			}
 		);
 		
-		if (prefs.isDeveloperMode()) {
+		if (E.preferences.isDeveloperMode()) {
 			this.diagnostics = new DiagnosticsRenderer();
 			this.fpsLogger = new FPSLogger();
 		}
-		
-		E.locales = new LocaleManager();
 
-		E.music = new MusicManager(prefs.isMusicMuted(), prefs.getMusicVolume());
-		E.sounds = new SoundManager(prefs.isSoundMuted(), prefs.getSoundVolume());
-
-		GameSettings settings = setup();
-		E.settings = settings;
-		
-		OrthographicCamera camera = new OrthographicCamera(settings.width, settings.height);
-		camera.position.set(settings.width / 2, settings.height / 2, 0);
+		OrthographicCamera camera = new OrthographicCamera(
+			E.settings.width, E.settings.height);
+		camera.position.set(E.settings.width / 2, E.settings.height / 2, 0);
 		
 		E.camera = camera;
 		
-		assets.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-		Texture.setAssetManager(assets);
+		E.assets.setLoader(TiledMap.class, 
+			new TmxMapLoader(new InternalFileHandleResolver()));
+		Texture.setAssetManager(E.assets);
+		
+		initialize();
 		
 		this.nextScreen = getNextScreen(null);
 		this.nextScreen.load();
@@ -106,7 +99,7 @@ public abstract class GameRunner extends Game {
 				
 				nextScreen = getNextScreen(currentScreen);
 				nextScreen.load();
-				if (assets.getQueuedAssets() == 0) {
+				if (E.assets.getQueuedAssets() == 0) {
 					setScreen(nextScreen);
 				}
 			} else {
@@ -120,7 +113,7 @@ public abstract class GameRunner extends Game {
 			}
 		}
 		
-		if (prefs.isDeveloperMode()) {
+		if (E.preferences.isDeveloperMode()) {
 			diagnostics.render(delta);
 			fpsLogger.log();
 		}
@@ -130,6 +123,7 @@ public abstract class GameRunner extends Game {
 	public void pause() {
 		super.pause();
 		E.log("pausing");
+		E.preferences.save();
 	}
 	
 	@Override
@@ -146,6 +140,7 @@ public abstract class GameRunner extends Game {
 		E.dispose();
 	}
 	
-	protected abstract GameSettings setup();
+	public abstract GameSettings getSettings();
+	protected abstract void initialize();
 	protected abstract GameScreen getNextScreen(GameScreen screen);
 }

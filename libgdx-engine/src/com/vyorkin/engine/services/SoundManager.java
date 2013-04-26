@@ -7,9 +7,12 @@ public class SoundManager {
 	private float volume;
 	private boolean muted;
 	
-	public SoundManager(boolean muted, float volume) {
-		this.volume = 1;
-		this.muted = false;
+	public SoundManager() {
+		this.muted = E.preferences.isSoundMuted();
+		this.volume = E.preferences.getSoundVolume();
+		
+		E.log("Sound muted: " + this.muted);
+		E.log("Sound volume: " + this.volume);
 	}
 	
 	public void play(String fileName) {

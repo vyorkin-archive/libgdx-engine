@@ -2,52 +2,65 @@ package com.vyorkin.engine.services;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.vyorkin.engine.E;
 
 public class PreferencesManager {
-	private static final String KEY = "default";
-	private static final String DEVELOPER_MODE = "developer";
-	private static final String MUSIC_VOLUME = "music.volume";
-	private static final String MUSIC_MUTED = "music.muted";
-	private static final String SOUND_VOLUME = "sound.volume";
-	private static final String SOUND_MUTED = "sound.muted";
+	private static final String DEVELOPER_MODE_KEY = "developer";
+	private static final String MUSIC_VOLUME_KEY = "music.volume";
+	private static final String MUSIC_MUTED_KEY = "music.muted";
+	private static final String SOUND_VOLUME_KEY = "sound.volume";
+	private static final String SOUND_MUTED_KEY = "sound.muted";
+	
+	private static final float SOUND_VOLUME_DEFAULT = 0.5f;
+	private static final float MUSIC_VOLUME_DEFAULT = 0.5f;
 	
 	private Preferences get() {
-		return Gdx.app.getPreferences(KEY);
+		return Gdx.app.getPreferences(E.settings.preferences);
+	}
+	
+	public void save() {
+		get().flush();
 	}
 	
 	public boolean isDeveloperMode() {
-		return get().getBoolean(DEVELOPER_MODE, false);
+		return get().getBoolean(DEVELOPER_MODE_KEY, false);
 	}
 	
 	public boolean isMusicMuted() {
-		return get().getBoolean(MUSIC_MUTED, false);
+		return get().getBoolean(MUSIC_MUTED_KEY, false);
 	}
 	public void setMusicMuted(boolean muted) {
-		get().putBoolean(MUSIC_MUTED, muted);
-		get().flush();
+		get().putBoolean(MUSIC_MUTED_KEY, muted);
+		save();
 	}
 	
 	public float getMusicVolume() {
-		return get().getFloat(MUSIC_VOLUME);
+		return get().getFloat(
+			MUSIC_VOLUME_KEY, 
+			MUSIC_VOLUME_DEFAULT
+		);
 	}
 	public void setMusicVolume(float volume) {
-		get().putFloat(MUSIC_VOLUME, volume);
-		get().flush();
+		get().putFloat(MUSIC_VOLUME_KEY, volume);
+		save();
 	}
 	
 	public boolean isSoundMuted() {
-		return get().getBoolean(SOUND_MUTED);
+		return get().getBoolean(SOUND_MUTED_KEY);
 	}
 	public void setSoundMuted(boolean muted) {
-		get().putBoolean(SOUND_MUTED, false);
-		get().flush();
+		get().putBoolean(SOUND_MUTED_KEY, false);
+		save();
 	}
 	
 	public float getSoundVolume() {
-		return get().getFloat(SOUND_VOLUME);
+		return get().getFloat(
+			SOUND_VOLUME_KEY, 
+			SOUND_VOLUME_DEFAULT
+		);
 	}
 	public void setSoundVolume(float volume) {
-		get().putFloat(SOUND_VOLUME, volume);
-		get().flush();
+		get().putFloat(SOUND_VOLUME_KEY, volume);
+		save();
 	}
 }

@@ -19,5 +19,6 @@ public class GameSettings {
 		this.log = log;
 		this.width = width;
 		this.height = height;
+		this.preferences = title.toLowerCase().replace(' ', '-');
 	}
 }

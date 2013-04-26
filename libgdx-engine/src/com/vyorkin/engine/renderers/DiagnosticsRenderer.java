@@ -1,18 +1,20 @@
 package com.vyorkin.engine.renderers;
 
 import com.badlogic.gdx.Gdx;
+
 import com.vyorkin.engine.E;
 import com.vyorkin.engine.base.Renderable;
 
 public class DiagnosticsRenderer implements Renderable {
+	private final float OFFSET_X = 20;
+	private final float OFFSET_Y = 20;
+	
 	@Override
 	public void render(float delta) {
 		E.batch.begin();
 		
-		E.font.drawMultiLine(
-			E.batch, getDiagnostics(), 
-			E.settings.width - 160, 60
-		);
+		E.font.drawMultiLine(E.batch, getDiagnostics(),
+			OFFSET_X, E.settings.height - OFFSET_Y);
 		
 		E.batch.end();
 	}

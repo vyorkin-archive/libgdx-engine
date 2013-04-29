@@ -1,6 +1,7 @@
 package com.vyorkin.engine.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.vyorkin.engine.E;
 
@@ -13,6 +14,11 @@ public abstract class StageScreen extends GameScreen {
 	
 	protected StageScreen(int width, int height) {
 		this.stage = new Stage(width, height, true);
+	}
+	
+	@Override
+	public Camera getCamera() {
+		return stage.getCamera();
 	}
 	
 	@Override

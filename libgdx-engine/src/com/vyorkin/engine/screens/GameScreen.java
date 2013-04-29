@@ -3,6 +3,7 @@ package com.vyorkin.engine.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.vyorkin.engine.E;
 
@@ -65,6 +66,8 @@ public abstract class GameScreen extends InputAdapter implements Screen {
 	protected void log(String text) {
 		E.log(text);
 	}
+	
+	public abstract Camera getCamera();
 	
 	protected void update(float delta) {}
 	protected abstract void draw(float delta);

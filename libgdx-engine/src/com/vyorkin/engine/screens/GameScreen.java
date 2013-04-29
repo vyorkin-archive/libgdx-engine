@@ -1,12 +1,12 @@
 package com.vyorkin.engine.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-
 import com.vyorkin.engine.E;
 
-public abstract class GameScreen implements Screen {
+public abstract class GameScreen extends InputAdapter implements Screen {
 	private boolean done;
 	
 	public boolean isDone() {
@@ -20,15 +20,10 @@ public abstract class GameScreen implements Screen {
 	public String getName() {
 		return getClass().getSimpleName();
 	}
-
+	
 	@Override
 	public void render(float delta) {
 		update(delta);
-		
-		E.camera.update();
-		E.camera.apply(Gdx.gl10);
-		
-		//batch.setProjectionMatrix(camera.combined);
 		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);

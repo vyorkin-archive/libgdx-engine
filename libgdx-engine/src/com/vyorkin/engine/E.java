@@ -2,7 +2,6 @@ package com.vyorkin.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vyorkin.engine.services.LocaleManager;
@@ -17,7 +16,6 @@ public class E {
 	public static MusicManager music;
 	public static AssetManager assets;
 	public static SpriteBatch batch;
-	public static OrthographicCamera camera;
 	public static GameSettings settings;
 	public static BitmapFont font;
 	

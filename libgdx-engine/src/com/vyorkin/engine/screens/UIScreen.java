@@ -6,7 +6,6 @@ import com.vyorkin.engine.E;
 
 public abstract class UIScreen extends StageScreen {
 	private final String uiSkinPath;
-	protected final boolean isDeveloperMode;
 
 	protected Skin skin;
 	protected Table table;
@@ -15,7 +14,6 @@ public abstract class UIScreen extends StageScreen {
 		super(E.settings.width, E.settings.height);
 		
 		this.uiSkinPath = uiSkinPath;
-		this.isDeveloperMode = E.preferences.isDeveloperMode();
 	}
 	
 	@Override
@@ -32,23 +30,23 @@ public abstract class UIScreen extends StageScreen {
 	public void draw(float delta) {
 		super.draw(delta);
 		
-		if (isDeveloperMode)
+		if (E.preferences.isDeveloperMode())
 			Table.drawDebug(stage);
-	}
-	
-	@Override
-	public void dispose() {
-		super.dispose();
-		skin.dispose();
 	}
 	
 	private Table createTable() {
 		Table table = new Table(skin);
         table.setFillParent(true);
         
-        if (isDeveloperMode)
+        if (E.preferences.isDeveloperMode())
             table.debug();
 
         return table;
 	}
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		//skin.dispose();
+	}	
 }

@@ -6,12 +6,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.vyorkin.engine.common.MouseCursor;
 import com.vyorkin.engine.renderers.DiagnosticsRenderer;
 import com.vyorkin.engine.renderers.LoadingRenderer;
 import com.vyorkin.engine.renderers.TextLoadingRenderer;
@@ -26,6 +26,7 @@ public abstract class GameRunner extends Game {
 	private FPSLogger fpsLogger;
 	private LoadingRenderer loading;
 	private DiagnosticsRenderer diagnostics;
+	private MouseCursor cursor;
 	private GameScreen nextScreen;
 	
 	@Override
@@ -51,22 +52,16 @@ public abstract class GameRunner extends Game {
 			}
 		);
 		
-		if (E.preferences.isDeveloperMode()) {
-			this.diagnostics = new DiagnosticsRenderer();
-			this.fpsLogger = new FPSLogger();
-		}
+		this.diagnostics = new DiagnosticsRenderer();
+		this.fpsLogger = new FPSLogger();
 
-		OrthographicCamera camera = new OrthographicCamera(
-			E.settings.width, E.settings.height);
-		camera.position.set(E.settings.width / 2, E.settings.height / 2, 0);
-		
-		E.camera = camera;
-		
 		E.assets.setLoader(TiledMap.class, 
 			new TmxMapLoader(new InternalFileHandleResolver()));
 		Texture.setAssetManager(E.assets);
 		
 		initialize();
+		
+		this.cursor = new MouseCursor();
 		
 		this.nextScreen = getNextScreen(null);
 		this.nextScreen.load();
@@ -76,8 +71,7 @@ public abstract class GameRunner extends Game {
 	public void setScreen(Screen screen) {
 		super.setScreen(screen);
 		
-		E.log("Setting screen: " + 
-			screen.getClass().getSimpleName());
+		E.log("Setting screen: " + screen.getClass().getSimpleName());
 	}
 	
 	@Override
@@ -105,17 +99,19 @@ public abstract class GameRunner extends Game {
 			} else {
 				currentScreen.render(delta);
 			}
+		} else if (currentScreen instanceof LoadingScreen) {
+			currentScreen.render(delta);
 		} else {
-			if (currentScreen instanceof LoadingScreen) {
-				currentScreen.render(delta);
-			} else {
-				loading.render(delta);
-			}
+			loading.render(delta);
 		}
 		
 		if (E.preferences.isDeveloperMode()) {
 			diagnostics.render(delta);
 			fpsLogger.log();
+		}
+		
+		if (currentScreen != null) {
+			cursor.draw(currentScreen.getCamera());
 		}
 	}
 

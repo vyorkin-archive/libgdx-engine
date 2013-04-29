@@ -12,7 +12,7 @@ public abstract class StageScreen extends GameScreen {
 	}
 	
 	protected StageScreen(int width, int height) {
-		stage = new Stage(width, height, true);
+		this.stage = new Stage(width, height, true);
 	}
 	
 	@Override

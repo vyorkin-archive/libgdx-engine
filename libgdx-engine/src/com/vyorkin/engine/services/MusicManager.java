@@ -16,8 +16,12 @@ public class MusicManager implements Disposable {
     	E.log("Music muted: " + this.muted);
     	E.log("Music volume: " + this.volume);
     }
+    
+    public void play(String filename) {
+    	play(filename, true);
+    }
 
-    public void play(String fileName) {
+    public void play(String fileName, boolean loop) {
     	if (muted || current == fileName)
     		return;
     	
@@ -28,7 +32,7 @@ public class MusicManager implements Disposable {
     	Music resource = E.assets.get(fileName, Music.class);
     	
     	resource.setVolume(volume);
-    	resource.setLooping(true);
+    	resource.setLooping(loop);
     	resource.play();
     	
     	current = fileName;
@@ -40,6 +44,7 @@ public class MusicManager implements Disposable {
     			E.log("Stopping current music");
     			Music music = E.assets.get(current, Music.class);
     			music.stop();
+    			current = null;
     		}
     	}
     }

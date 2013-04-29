@@ -14,7 +14,7 @@ public class PreferencesManager {
 	private static final float SOUND_VOLUME_DEFAULT = 0.5f;
 	private static final float MUSIC_VOLUME_DEFAULT = 0.5f;
 	
-	private Preferences get() {
+	public Preferences get() {
 		return Gdx.app.getPreferences(E.settings.preferences);
 	}
 	
@@ -23,7 +23,12 @@ public class PreferencesManager {
 	}
 	
 	public boolean isDeveloperMode() {
-		return get().getBoolean(DEVELOPER_MODE_KEY, false);
+		return get().getBoolean(DEVELOPER_MODE_KEY, true);
+	}
+	
+	public void toggleDeveloperMode() {
+		get().putBoolean(DEVELOPER_MODE_KEY, !isDeveloperMode());
+		save();
 	}
 	
 	public boolean isMusicMuted() {

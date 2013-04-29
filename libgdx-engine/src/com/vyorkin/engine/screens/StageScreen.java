@@ -24,6 +24,7 @@ public abstract class StageScreen extends GameScreen {
 	@Override
 	public void show() {
 		super.show();
+		stage.setViewport(E.settings.width, E.settings.height, true);
 		Gdx.input.setInputProcessor(stage);
 	}
 	

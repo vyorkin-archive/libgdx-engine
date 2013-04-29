@@ -23,6 +23,10 @@ public class E {
 		Gdx.app.log(settings.log, text);
 	}
 	
+	public static void log(String text, Object... args) {
+		log(String.format(text, args));
+	}
+	
 	public static void dispose() {
 		music.dispose();
 		font.dispose();

@@ -61,7 +61,7 @@ public abstract class GameRunner extends Game {
 		
 		initialize();
 		
-		this.cursor = new MouseCursor();
+		//this.cursor = new MouseCursor();
 		
 		this.nextScreen = getNextScreen(null);
 		this.nextScreen.load();
@@ -110,9 +110,9 @@ public abstract class GameRunner extends Game {
 			fpsLogger.log();
 		}
 		
-		if (currentScreen != null) {
-			cursor.draw(currentScreen.getCamera());
-		}
+		//if (currentScreen != null) {
+		//	cursor.draw(currentScreen.getCamera());
+		//}
 	}
 
 	@Override

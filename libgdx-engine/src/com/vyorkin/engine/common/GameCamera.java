@@ -21,7 +21,8 @@ public class GameCamera extends OrthographicCamera {
 		this.virtualHeight = height;
 		this.virtualAspectRatio = virtualWidth / virtualHeight;
 
-//		position.set(virtualWidth/2, virtualHeight/2, 0);
+		position.set(virtualWidth/2, virtualHeight/2, 0);
+//		setToOrtho(false, viewportWidth, viewportHeight);
 	}
 
 	public void updateViewport() {

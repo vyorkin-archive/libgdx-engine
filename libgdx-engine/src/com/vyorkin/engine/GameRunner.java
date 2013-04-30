@@ -61,7 +61,8 @@ public abstract class GameRunner extends Game {
 		
 		initialize();
 		
-		//this.cursor = new MouseCursor();
+		Gdx.input.setCatchBackKey(true);
+		this.cursor = new MouseCursor();
 		
 		this.nextScreen = getNextScreen(null);
 		this.nextScreen.load();
@@ -97,7 +98,10 @@ public abstract class GameRunner extends Game {
 					setScreen(nextScreen);
 				}
 			} else {
+				E.batch.begin();
 				currentScreen.render(delta);
+				cursor.draw(currentScreen.getCamera());
+				E.batch.end();
 			}
 		} else if (currentScreen instanceof LoadingScreen) {
 			currentScreen.render(delta);
@@ -109,10 +113,6 @@ public abstract class GameRunner extends Game {
 			diagnostics.render(delta);
 			fpsLogger.log();
 		}
-		
-		//if (currentScreen != null) {
-		//	cursor.draw(currentScreen.getCamera());
-		//}
 	}
 
 	@Override

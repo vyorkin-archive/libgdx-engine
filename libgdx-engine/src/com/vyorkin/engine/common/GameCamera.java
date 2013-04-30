@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Scaling;
+import com.vyorkin.engine.E;
 
 public class GameCamera extends OrthographicCamera {
 	private final int virtualWidth;
@@ -24,7 +25,16 @@ public class GameCamera extends OrthographicCamera {
 		position.set(virtualWidth/2, virtualHeight/2, 0);
 //		setToOrtho(false, viewportWidth, viewportHeight);
 	}
-
+	
+	public void refresh() {
+		update();
+		
+		if (!E.settings.useGL20)
+			apply(Gdx.gl10);
+		
+		updateViewport();
+	}
+	
 	public void updateViewport() {
 		Gdx.gl.glViewport((int) viewport.x, (int) viewport.y,
 			(int) viewport.width, (int) viewport.height);

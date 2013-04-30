@@ -29,9 +29,7 @@ public class MouseCursor {
 			);
 			camera.unproject(position);
 			
-			E.batch.begin();
 			E.batch.draw(texture, position.x, position.y);
-			E.batch.end();
 		}
 	}
 	
